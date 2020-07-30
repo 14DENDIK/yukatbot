@@ -2,7 +2,6 @@ package store
 
 import (
 	"context"
-	"database/sql"
 
 	"github.com/14DENDIK/yukatbot/api/telegram"
 	"github.com/14DENDIK/yukatbot/internal/yukat/models"
@@ -30,14 +29,15 @@ func (u *userRepo) GetOrCreate(t *telegram.User) (*models.User, error) {
 	}
 	if err := u.db.QueryRow(
 		context.Background(),
-		"SELECT * FROM users WHERE telegram_id=$1;",
-	).Scan(user); err != nil {
-		if err != sql.ErrNoRows {
+		"SELECT id FROM users WHERE telegram_id=$1;",
+		user.TelegramID,
+	).Scan(&user.ID); err != nil {
+		if err != pgx.ErrNoRows {
 			return nil, err
 		}
 		if err := u.db.QueryRow(
 			context.Background(),
-			"INSERT INTO users(telegram_id, first_name, last_name, username, language_code VALUES($1, $2, $3, $4, $5 RETURNING id;",
+			"INSERT INTO users(telegram_id, first_name, last_name, username, language_code) VALUES($1, $2, $3, $4, $5) RETURNING id;",
 			user.TelegramID,
 			user.FirstName,
 			user.LastName,

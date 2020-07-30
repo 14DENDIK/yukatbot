@@ -9,7 +9,8 @@ import (
 	"github.com/14DENDIK/yukatbot/api/telegram"
 )
 
-func (m *Method) sendMessage(reqBody *telegram.SendMessage) error {
+// SendMessage ...
+func (m *Method) SendMessage(reqBody *telegram.SendMessage) error {
 	reqBytes, err := json.Marshal(reqBody)
 	if err != nil {
 		return err
