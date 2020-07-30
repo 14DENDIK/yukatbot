@@ -1,0 +1,4 @@
+bind_addr = ":3000"
+token="1238834194:AAEPQavLdJZGMfZ0JsBpEuEC4Fj8s3UPbwo"
+database_url = "host=localhost port=5432 user=sardor password=1 dbname=yukatdb"
+webhook_url = "https://cf337573516f.ngrok.io"
