@@ -8,4 +8,5 @@ type User struct {
 	LastName     string `json:"last_name"`
 	Username     string `json:"username"`
 	LanguageCode string `json:"language_code"`
+	CurrentStep  string `json:"current_step"`
 }

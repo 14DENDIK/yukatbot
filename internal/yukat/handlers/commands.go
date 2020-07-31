@@ -24,13 +24,16 @@ func (h *Handler) startCommand(message *telegram.Message) error {
 		return err
 	}
 
-	text := "Hello <b>" + user.FirstName + " " + user.LastName + ".</b>\n"
-	text += "Yukat bot is happy for using me...\n"
-	text += "For more information about this bot please type /help command"
+	text := "Hello <b>" + user.FirstName + " " + user.LastName + ".</b>\n\n"
+
+	textBody, err := h.store.CommandsRepo.Get(message.Text)
+	if err != nil {
+		return err
+	}
 
 	reply := &telegram.SendMessage{
 		ChatID:    message.Chat.ID,
-		Text:      text,
+		Text:      text + textBody,
 		ParseMode: "HTML",
 	}
 	if err := h.method.SendMessage(reply); err != nil {

@@ -20,6 +20,20 @@ func newUserRepo(db *pgx.Conn) *userRepo {
 }
 
 func (u *userRepo) GetOrCreate(t *telegram.User) (*models.User, error) {
+	user, err := u.Get(t)
+	if err != nil {
+		if err != pgx.ErrNoRows {
+			return nil, err
+		}
+		user, err = u.Create(t)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return user, nil
+}
+
+func (u *userRepo) Get(t *telegram.User) (*models.User, error) {
 	user := &models.User{
 		TelegramID:   t.ID,
 		FirstName:    t.FirstName,
@@ -32,20 +46,30 @@ func (u *userRepo) GetOrCreate(t *telegram.User) (*models.User, error) {
 		"SELECT id FROM users WHERE telegram_id=$1;",
 		user.TelegramID,
 	).Scan(&user.ID); err != nil {
-		if err != pgx.ErrNoRows {
-			return nil, err
-		}
-		if err := u.db.QueryRow(
-			context.Background(),
-			"INSERT INTO users(telegram_id, first_name, last_name, username, language_code) VALUES($1, $2, $3, $4, $5) RETURNING id;",
-			user.TelegramID,
-			user.FirstName,
-			user.LastName,
-			user.Username,
-			user.LanguageCode,
-		).Scan(&user.ID); err != nil {
-			return nil, err
-		}
+		return nil, err
+	}
+	return user, nil
+}
+
+func (u *userRepo) Create(t *telegram.User) (*models.User, error) {
+	user := &models.User{
+		TelegramID:   t.ID,
+		FirstName:    t.FirstName,
+		LastName:     t.LastName,
+		Username:     t.Username,
+		LanguageCode: t.LanguageCode,
+	}
+	if err := u.db.QueryRow(
+		context.Background(),
+		"INSERT INTO users(telegram_id, first_name, last_name, username, language_code, current_step) VALUES($1, $2, $3, $4, $5, $6) RETURNING id;",
+		user.TelegramID,
+		user.FirstName,
+		user.LastName,
+		user.Username,
+		user.LanguageCode,
+		"main",
+	).Scan(&user.ID); err != nil {
+		return nil, err
 	}
 	return user, nil
 }
