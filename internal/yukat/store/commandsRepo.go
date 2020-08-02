@@ -17,12 +17,13 @@ func newCommandsRepo(db *pgx.Conn) *commandsRepo {
 	}
 }
 
-func (r *commandsRepo) Get(command string) (string, error) {
+func (r *commandsRepo) Get(command, langCode string) (string, error) {
 	var textBody string
 	if err := r.db.QueryRow(
 		context.Background(),
-		"SELECT text FROM commands WHERE name=$1",
+		"SELECT text ->> $2 FROM commands WHERE name=$1",
 		command,
+		langCode,
 	).Scan(&textBody); err != nil {
 		return "", err
 	}

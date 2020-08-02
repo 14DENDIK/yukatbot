@@ -57,7 +57,10 @@ func (u *userRepo) Create(t *telegram.User) (*models.User, error) {
 		FirstName:    t.FirstName,
 		LastName:     t.LastName,
 		Username:     t.Username,
-		LanguageCode: t.LanguageCode,
+		LanguageCode: "en",
+	}
+	if contains([]string{"en", "ru", "uz"}, t.LanguageCode) {
+		user.LanguageCode = t.LanguageCode
 	}
 	if err := u.db.QueryRow(
 		context.Background(),
@@ -72,4 +75,13 @@ func (u *userRepo) Create(t *telegram.User) (*models.User, error) {
 		return nil, err
 	}
 	return user, nil
+}
+
+func contains(codes []string, langCode string) bool {
+	for _, c := range codes {
+		if c == langCode {
+			return true
+		}
+	}
+	return false
 }

@@ -1,0 +1,33 @@
+{
+    "language": "uz",
+    "messages": [
+        {
+            "id": "Hello \u003cb\u003e{FirstName} {LastName}.\u003c/b\u003e",
+            "message": "Hello \u003cb\u003e{FirstName} {LastName}.\u003c/b\u003e",
+            "translation": "Salom \u003cb\u003e%[1]s %[2]s.\u003c/b\u003e",
+            "placeholders": [
+                {
+                    "id": "FirstName",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "user.FirstName"
+                },
+                {
+                    "id": "LastName",
+                    "string": "%[2]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 2,
+                    "expr": "user.LastName"
+                }
+            ]
+        },
+        {
+            "id": "Hello",
+            "message": "Hello",
+            "translation": "Salom"
+        }
+    ]
+}

@@ -7,7 +7,10 @@ import (
 	"github.com/14DENDIK/yukatbot/internal/yukat"
 	"github.com/14DENDIK/yukatbot/internal/yukat/config"
 	"github.com/BurntSushi/toml"
+	_ "golang.org/x/text/message/catalog"
 )
+
+//go:generate gotext -srclang=en update -out=catalog.go -lang=en,ru,uz
 
 var (
 	configPath string
