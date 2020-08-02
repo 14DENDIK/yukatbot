@@ -8,4 +8,6 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	go.uber.org/zap v1.15.0
 	golang.org/x/crypto v0.0.0-20200728195943-123391ffb6de // indirect
+	golang.org/x/text v0.3.3
+	golang.org/x/tools v0.0.0-20200731060945-b5fad4ed8dd6 // indirect
 )

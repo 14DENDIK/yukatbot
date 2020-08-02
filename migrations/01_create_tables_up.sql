@@ -13,5 +13,5 @@ CREATE TABLE users (
 CREATE TABLE commands (
     id SERIAL PRIMARY KEY,
     name VARCHAR(20) NOT NULL UNIQUE,
-    text TEXT NULL
+    text JSONB NULL
 );

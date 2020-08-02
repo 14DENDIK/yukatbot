@@ -2,6 +2,9 @@ package handlers
 
 import (
 	"github.com/14DENDIK/yukatbot/api/telegram"
+	"golang.org/x/text/language"
+	"golang.org/x/text/message"
+	_ "golang.org/x/text/message/catalog" // Any
 )
 
 func (h *Handler) commandsHandler(body *telegram.Update) error {
@@ -18,21 +21,28 @@ func (h *Handler) commandsHandler(body *telegram.Update) error {
 	return nil
 }
 
-func (h *Handler) startCommand(message *telegram.Message) error {
-	user, err := h.store.UserRepo.GetOrCreate(&message.From)
+func (h *Handler) startCommand(tgmessage *telegram.Message) error {
+	user, err := h.store.UserRepo.GetOrCreate(&tgmessage.From)
 	if err != nil {
 		return err
 	}
-
-	text := "Hello <b>" + user.FirstName + " " + user.LastName + ".</b>\n\n"
-
-	textBody, err := h.store.CommandsRepo.Get(message.Text)
+	p := &message.Printer{}
+	switch user.LanguageCode {
+	case "ru":
+		p = message.NewPrinter(language.Russian)
+	case "uz":
+		p = message.NewPrinter(language.Uzbek)
+	default:
+		p = message.NewPrinter(language.English)
+	}
+	text := p.Sprintf("Hello <b>%s %s.</b>\n\n", user.FirstName, user.LastName)
+	textBody, err := h.store.CommandsRepo.Get(tgmessage.Text, user.LanguageCode)
 	if err != nil {
 		return err
 	}
 
 	reply := &telegram.SendMessage{
-		ChatID:    message.Chat.ID,
+		ChatID:    tgmessage.Chat.ID,
 		Text:      text + textBody,
 		ParseMode: "HTML",
 	}
@@ -42,11 +52,11 @@ func (h *Handler) startCommand(message *telegram.Message) error {
 	return nil
 }
 
-func (h *Handler) defaultCommand(message *telegram.Message) error {
+func (h *Handler) defaultCommand(tgmessage *telegram.Message) error {
 	reply := &telegram.SendMessage{
-		ChatID:           message.Chat.ID,
+		ChatID:           tgmessage.Chat.ID,
 		Text:             "Unknown command",
-		ReplyToMessageID: message.MessageID,
+		ReplyToMessageID: tgmessage.MessageID,
 	}
 	if err := h.method.SendMessage(reply); err != nil {
 		return err
