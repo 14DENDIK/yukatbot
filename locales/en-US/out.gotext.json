@@ -1,0 +1,79 @@
+{
+    "language": "en-US",
+    "messages": [
+        {
+            "id": "Choose language",
+            "message": "Choose language",
+            "translation": "Choose language",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Language changed",
+            "message": "Language changed",
+            "translation": "Language changed",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Settings are changed",
+            "message": "Settings are changed",
+            "translation": "Settings are changed",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Wrong callback input!",
+            "message": "Wrong callback input!",
+            "translation": "Wrong callback input!",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Hello \u003cb\u003e{FirstName} {LastName}.\u003c/b\u003e",
+            "message": "Hello \u003cb\u003e{FirstName} {LastName}.\u003c/b\u003e",
+            "translation": "Hello \u003cb\u003e{FirstName} {LastName}.\u003c/b\u003e",
+            "translatorComment": "Copied from source.",
+            "placeholders": [
+                {
+                    "id": "FirstName",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "user.FirstName"
+                },
+                {
+                    "id": "LastName",
+                    "string": "%[2]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 2,
+                    "expr": "user.LastName"
+                }
+            ],
+            "fuzzy": true
+        },
+        {
+            "id": "Unknown command",
+            "message": "Unknown command",
+            "translation": "Unknown command",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "🇬🇧 Language",
+            "message": "🇬🇧 Language",
+            "translation": "🇬🇧 Language",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Done",
+            "message": "Done",
+            "translation": "Done",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        }
+    ]
+}

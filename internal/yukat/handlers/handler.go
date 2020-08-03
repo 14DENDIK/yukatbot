@@ -32,23 +32,23 @@ func New(store *store.Store, logger *zap.Logger, token string) *Handler {
 func (h *Handler) MainEntry(res http.ResponseWriter, req *http.Request) {
 	body := &telegram.Update{}
 
-	h.logger.Sugar().Infow(
-		"Telgram interaction",
-		"method", req.Method,
-	)
-
 	if err := json.NewDecoder(req.Body).Decode(body); err != nil {
 		h.logger.Sugar().Error("Could not decode req body")
 		return
 	}
 
 	if strings.HasPrefix(body.Message.Text, "/") {
+		h.logger.Sugar().Infof("[%s] Command: %v", req.Method, body.Message.Text)
 		if err := h.commandsHandler(body); err != nil {
 			h.logger.Sugar().Error(err)
 		}
 	} else if body.CallbackQuery.ID != "" {
-		fmt.Println("Callback")
+		h.logger.Sugar().Infof("[%s] Callback Data: %v", req.Method, body.CallbackQuery.Data)
+		if err := h.callbacksHandler(body); err != nil {
+			h.logger.Sugar().Error(err)
+		}
 	} else {
+		h.logger.Sugar().Infof("[%s] Message: %v", req.Method, body.Message.Text)
 		fmt.Print("Just Text")
 	}
 }

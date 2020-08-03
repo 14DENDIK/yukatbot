@@ -2,6 +2,26 @@
     "language": "uz",
     "messages": [
         {
+            "id": "Choose language",
+            "message": "Choose language",
+            "translation": "Tilni tanlang"
+        },
+        {
+            "id": "Language changed",
+            "message": "Language changed",
+            "translation": "Til o'zgartirildi"
+        },
+        {
+            "id": "Settings are changed",
+            "message": "Settings are changed",
+            "translation": "Sozlamalar ozgartirildi"
+        },
+        {
+            "id": "Wrong callback input!",
+            "message": "Wrong callback input!",
+            "translation": "Notog'ri kiritish"
+        },
+        {
             "id": "Hello \u003cb\u003e{FirstName} {LastName}.\u003c/b\u003e",
             "message": "Hello \u003cb\u003e{FirstName} {LastName}.\u003c/b\u003e",
             "translation": "Salom \u003cb\u003e%[1]s %[2]s.\u003c/b\u003e",
@@ -25,9 +45,19 @@
             ]
         },
         {
-            "id": "Hello",
-            "message": "Hello",
-            "translation": "Salom"
+            "id": "Unknown command",
+            "message": "Unknown command",
+            "translation": "Nomalum komanda"
+        },
+        {
+            "id": "🇬🇧 Language",
+            "message": "🇬🇧 Language",
+            "translation": "🇺🇿 Til"
+        },
+        {
+            "id": "Done",
+            "message": "Done",
+            "translation": "Tayyor"
         }
     ]
 }

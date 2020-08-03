@@ -2,6 +2,26 @@
     "language": "ru",
     "messages": [
         {
+            "id": "Choose language",
+            "message": "Choose language",
+            "translation": "Выберите язык"
+        },
+        {
+            "id": "Language changed",
+            "message": "Language changed",
+            "translation": "Язык изменен"
+        },
+        {
+            "id": "Settings are changed",
+            "message": "Settings are changed",
+            "translation": "Настройки изменены"
+        },
+        {
+            "id": "Wrong callback input!",
+            "message": "Wrong callback input!",
+            "translation": "Неверный ввод"
+        },
+        {
             "id": "Hello \u003cb\u003e{FirstName} {LastName}.\u003c/b\u003e",
             "message": "Hello \u003cb\u003e{FirstName} {LastName}.\u003c/b\u003e",
             "translation": "Привет \u003cb\u003e%[1]s %[2]s.\u003c/b\u003e",
@@ -25,9 +45,19 @@
             ]
         },
         {
-            "id": "Hello",
-            "message": "Hello",
-            "translation": "Привет"
+            "id": "Unknown command",
+            "message": "Unknown command",
+            "translation": "Неизвестная команда"
+        },
+        {
+            "id": "🇬🇧 Language",
+            "message": "🇬🇧 Language",
+            "translation": "🇷🇺 Язык"
+        },
+        {
+            "id": "Done",
+            "message": "Done",
+            "translation": "Готово"
         }
     ]
 }

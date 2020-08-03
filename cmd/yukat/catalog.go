@@ -40,25 +40,47 @@ func init() {
 }
 
 var messageKeyToIndex = map[string]int{
-	"Hello <b>%s %s.</b>\n\n": 0,
+	"Choose language":         0,
+	"Done":                    7,
+	"Hello <b>%s %s.</b>\n\n": 4,
+	"Language changed":        1,
+	"Settings are changed":    2,
+	"Unknown command":         5,
+	"Wrong callback input!":   3,
+	"🇬🇧 Language":             6,
 }
 
-var enIndex = []uint32{ // 2 elements
-	0x00000000, 0x00000020,
-} // Size: 32 bytes
+var enIndex = []uint32{ // 9 elements
+	0x00000000, 0x00000010, 0x00000021, 0x00000036,
+	0x0000004c, 0x0000006c, 0x0000007c, 0x0000008e,
+	0x00000093,
+} // Size: 60 bytes
 
-const enData string = "\x04\x00\x02\n\n\x1a\x02Hello <b>%[1]s %[2]s.</b>"
+const enData string = "" + // Size: 147 bytes
+	"\x02Choose language\x02Language changed\x02Settings are changed\x02Wrong" +
+	" callback input!\x04\x00\x02\x0a\x0a\x1a\x02Hello <b>%[1]s %[2]s.</b>" +
+	"\x02Unknown command\x02🇬🇧 Language\x02Done"
 
-var ruIndex = []uint32{ // 2 elements
-	0x00000000, 0x00000027,
-} // Size: 32 bytes
+var ruIndex = []uint32{ // 9 elements
+	0x00000000, 0x0000001a, 0x00000032, 0x00000056,
+	0x00000070, 0x00000097, 0x000000bd, 0x000000cf,
+	0x000000dc,
+} // Size: 60 bytes
 
-const ruData string = "\x04\x00\x02\n\n!\x02Привет <b>%[1]s %[2]s.</b>"
+const ruData string = "" + // Size: 220 bytes
+	"\x02Выберите язык\x02Язык изменен\x02Настройки изменены\x02Неверный ввод" +
+	"\x04\x00\x02\x0a\x0a!\x02Привет <b>%[1]s %[2]s.</b>\x02Неизвестная коман" +
+	"да\x02🇷🇺 Язык\x02Готово"
 
-var uzIndex = []uint32{ // 2 elements
-	0x00000000, 0x00000020,
-} // Size: 32 bytes
+var uzIndex = []uint32{ // 9 elements
+	0x00000000, 0x0000000e, 0x00000020, 0x00000038,
+	0x0000004a, 0x0000006a, 0x0000007a, 0x00000087,
+	0x0000008e,
+} // Size: 60 bytes
 
-const uzData string = "\x04\x00\x02\n\n\x1a\x02Salom <b>%[1]s %[2]s.</b>"
+const uzData string = "" + // Size: 142 bytes
+	"\x02Tilni tanlang\x02Til o'zgartirildi\x02Sozlamalar ozgartirildi\x02Not" +
+	"og'ri kiritish\x04\x00\x02\x0a\x0a\x1a\x02Salom <b>%[1]s %[2]s.</b>\x02N" +
+	"omalum komanda\x02🇺🇿 Til\x02Tayyor"
 
-// Total table size 199 bytes (0KiB); checksum: DEC111A
+	// Total table size 689 bytes (0KiB); checksum: DECDCB1E

@@ -35,17 +35,16 @@ func (u *userRepo) GetOrCreate(t *telegram.User) (*models.User, error) {
 
 func (u *userRepo) Get(t *telegram.User) (*models.User, error) {
 	user := &models.User{
-		TelegramID:   t.ID,
-		FirstName:    t.FirstName,
-		LastName:     t.LastName,
-		Username:     t.Username,
-		LanguageCode: t.LanguageCode,
+		TelegramID: t.ID,
+		FirstName:  t.FirstName,
+		LastName:   t.LastName,
+		Username:   t.Username,
 	}
 	if err := u.db.QueryRow(
 		context.Background(),
-		"SELECT id FROM users WHERE telegram_id=$1;",
+		"SELECT id, language_code, current_step FROM users WHERE telegram_id=$1;",
 		user.TelegramID,
-	).Scan(&user.ID); err != nil {
+	).Scan(&user.ID, &user.LanguageCode, &user.CurrentStep); err != nil {
 		return nil, err
 	}
 	return user, nil
@@ -58,6 +57,7 @@ func (u *userRepo) Create(t *telegram.User) (*models.User, error) {
 		LastName:     t.LastName,
 		Username:     t.Username,
 		LanguageCode: "en",
+		CurrentStep:  "main",
 	}
 	if contains([]string{"en", "ru", "uz"}, t.LanguageCode) {
 		user.LanguageCode = t.LanguageCode
@@ -70,11 +70,28 @@ func (u *userRepo) Create(t *telegram.User) (*models.User, error) {
 		user.LastName,
 		user.Username,
 		user.LanguageCode,
-		"main",
+		user.CurrentStep,
 	).Scan(&user.ID); err != nil {
 		return nil, err
 	}
 	return user, nil
+}
+
+func (u *userRepo) Update(user *models.User) error {
+	if _, err := u.db.Exec(
+		context.Background(),
+		"UPDATE users SET first_name=$1, last_name=$2, username=$3, language_code=$4, current_step=$5 WHERE id=$6 AND telegram_id=$7;",
+		user.FirstName,
+		user.LastName,
+		user.Username,
+		user.LanguageCode,
+		user.CurrentStep,
+		user.ID,
+		user.TelegramID,
+	); err != nil {
+		return err
+	}
+	return nil
 }
 
 func contains(codes []string, langCode string) bool {
