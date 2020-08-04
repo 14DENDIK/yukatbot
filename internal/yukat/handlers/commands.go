@@ -1,12 +1,18 @@
 package handlers
 
 import (
+	"strings"
+
 	"github.com/14DENDIK/yukatbot/api/telegram"
 	"github.com/14DENDIK/yukatbot/internal/yukat/markups"
 	"github.com/14DENDIK/yukatbot/internal/yukat/utils"
 )
 
 func (h *Handler) commandsHandler(body *telegram.Update) error {
+	if idx := strings.IndexByte(body.Message.Text, '@'); idx >= 0 {
+		body.Message.Text = body.Message.Text[:strings.IndexByte(body.Message.Text, '@')]
+	}
+
 	switch body.Message.Text {
 	case "/start":
 		if err := h.startCommand(&body.Message); err != nil {
@@ -45,7 +51,7 @@ func (h *Handler) startCommand(tgmessage *telegram.Message) error {
 		Text:      text + textBody,
 		ParseMode: "HTML",
 	}
-	if err := h.method.RunMethod("sendMessage", reply); err != nil {
+	if err := h.method.RunPostMethod("sendMessage", reply); err != nil {
 		return err
 	}
 	return nil
@@ -65,7 +71,7 @@ func (h *Handler) helpCommand(tgmessage *telegram.Message) error {
 		Text:      text,
 		ParseMode: "HTML",
 	}
-	if err = h.method.RunMethod("sendMessage", reply); err != nil {
+	if err = h.method.RunPostMethod("sendMessage", reply); err != nil {
 		return err
 	}
 	return nil
@@ -88,11 +94,11 @@ func (h *Handler) settingsCommand(tgmessage *telegram.Message) error {
 	}
 
 	// Should work on error handling of goroutines
-	go h.method.RunMethod("deleteMessage", &telegram.DeleteMessage{
+	go h.method.RunPostMethod("deleteMessage", &telegram.DeleteMessage{
 		ChatID:    tgmessage.Chat.ID,
 		MessageID: tgmessage.MessageID,
 	})
-	if err = h.method.RunMethod("sendMessage", reply); err != nil {
+	if err = h.method.RunPostMethod("sendMessage", reply); err != nil {
 		return err
 	}
 	return nil
@@ -109,7 +115,7 @@ func (h *Handler) defaultCommand(tgmessage *telegram.Message) error {
 		Text:             p.Sprintf("Unknown command"),
 		ReplyToMessageID: tgmessage.MessageID,
 	}
-	if err := h.method.RunMethod("sendMessage", reply); err != nil {
+	if err := h.method.RunPostMethod("sendMessage", reply); err != nil {
 		return err
 	}
 	return nil

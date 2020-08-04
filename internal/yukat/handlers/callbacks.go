@@ -49,10 +49,10 @@ func (h *Handler) languageCallback(callback *telegram.CallbackQuery, user *model
 		CallbackQueryID: callback.ID,
 		Text:            p.Sprintf("Choose language"),
 	}
-	if err := h.method.RunMethod("editMessageReplyMarkup", reply); err != nil {
+	if err := h.method.RunPostMethod("editMessageReplyMarkup", reply); err != nil {
 		return err
 	}
-	if err := h.method.RunMethod("answerCallbackQuery", answer); err != nil {
+	if err := h.method.RunPostMethod("answerCallbackQuery", answer); err != nil {
 		return err
 	}
 	return nil
@@ -79,10 +79,10 @@ func (h *Handler) changeLangCallback(callback *telegram.CallbackQuery, user *mod
 		CallbackQueryID: callback.ID,
 		Text:            p.Sprintf("Language changed"),
 	}
-	if err = h.method.RunMethod("editMessageText", replyText); err != nil {
+	if err = h.method.RunPostMethod("editMessageText", replyText); err != nil {
 		return err
 	}
-	if err = h.method.RunMethod("answerCallbackQuery", answer); err != nil {
+	if err = h.method.RunPostMethod("answerCallbackQuery", answer); err != nil {
 		return err
 	}
 	return nil
@@ -95,13 +95,13 @@ func (h *Handler) langDoneCallback(callback *telegram.CallbackQuery, user *model
 		Text:            p.Sprintf("Settings are changed"),
 		ShowAlert:       true,
 	}
-	if err := h.method.RunMethod("deleteMessage", &telegram.DeleteMessage{
+	if err := h.method.RunPostMethod("deleteMessage", &telegram.DeleteMessage{
 		ChatID:    callback.Message.Chat.ID,
 		MessageID: callback.Message.MessageID,
 	}); err != nil {
 		return err
 	}
-	if err := h.method.RunMethod("answerCallbackQuery", reply); err != nil {
+	if err := h.method.RunPostMethod("answerCallbackQuery", reply); err != nil {
 		return err
 	}
 	return nil
@@ -114,7 +114,7 @@ func (h *Handler) defaultCallback(callback *telegram.CallbackQuery, user *models
 		Text:            p.Sprintf("Wrong callback input!"),
 	}
 
-	if err := h.method.RunMethod("answerCallbackQuery", reply); err != nil {
+	if err := h.method.RunPostMethod("answerCallbackQuery", reply); err != nil {
 		return err
 	}
 
